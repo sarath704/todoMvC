@@ -16,7 +16,7 @@ angular.module('todomvc')
 			}
 		}
 	})
-	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store) {
+	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store,localStorage) {
 		'use strict';
 
 		var todos = $scope.todos = store.todos;
@@ -110,7 +110,7 @@ angular.module('todomvc')
 		$scope.saveTodo = function (todo) {
 			store.put(todo);
 		};
-		$scope.selectedTodos = [];
+		$scope.selectedTodos = store.getSelectedTodos();
 
 
 		$scope.toggleCompleted = function (todo, completed) {
@@ -125,7 +125,6 @@ angular.module('todomvc')
 				});
 
 			if (todo.completed) todo.compTime = (+ new Date())
-			else delete todo.compTime;
 			$scope.getLastThree();
 
 		};
@@ -138,6 +137,9 @@ angular.module('todomvc')
 				if (a.compTime > b.compTime) return -1;
 				return 0;
 			}).slice(0, 3);
+
+			store.saveSlectedTods($scope.selectedTodos);
+
 		}
 		$scope.changeColor = function (arg) {
 			var ind = $scope.selectedTodos.findIndex(function (e) {

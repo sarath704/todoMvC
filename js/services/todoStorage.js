@@ -81,6 +81,11 @@ angular.module('todomvc')
 			put: function (todo) {
 				return store.api.update({ id: todo.id }, todo)
 					.$promise;
+			},getSelectedTodos:function(){
+				return JSON.parse(localStorage.getItem("selectedTos") || '[]');
+			},
+			saveSlectedTods:function(todo){
+				localStorage.setItem("selectedTos",JSON.stringify(todo))
 			}
 		};
 
@@ -158,6 +163,12 @@ angular.module('todomvc')
 				deferred.resolve(store.todos);
 
 				return deferred.promise;
+			},
+			getSelectedTodos:function(){
+				return JSON.parse(localStorage.getItem("selectedTos") || '[]');
+			},
+			saveSlectedTods:function(todo){
+				localStorage.setItem("selectedTos",JSON.stringify(todo));
 			}
 		};
 
